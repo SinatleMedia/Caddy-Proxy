@@ -1,29 +1,12 @@
 {
-	admin off
-	persist_config off
 	auto_https off
-
-	log {
-		format json
-	}
-
-	servers {
-		trusted_proxies static private_ranges
-	}
 }
 
 :{$PORT} {
-
-	log {
-		format json
-	}
-
-	# 1️⃣ BACKEND — must be first
 	handle_path /backend/* {
 		reverse_proxy sinatle-api.railway.internal:5050
 	}
 
-	# 2️⃣ FRONTEND — fallback
 	handle {
 		reverse_proxy sinatle-ui.railway.internal:8080
 	}
