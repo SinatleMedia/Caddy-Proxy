@@ -1,11 +1,14 @@
 {
-	auto_https on
+	auto_https off
 }
 
-{$RAILWAY_PUBLIC_DOMAIN} {
-	reverse_proxy sinatle-api.railway.internal:5050
-}
+:{$PORT} {
 
-sinatle-ui.{$RAILWAY_PUBLIC_DOMAIN} {
-	reverse_proxy sinatle-ui.railway.internal:8080
+	handle_path /backend/* {
+		reverse_proxy sinatle-api.railway.internal:5050
+	}
+
+	handle {
+		reverse_proxy sinatle-ui.railway.internal:8080
+	}
 }
