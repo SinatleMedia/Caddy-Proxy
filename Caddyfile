@@ -3,11 +3,12 @@
 }
 
 :{$PORT} {
-	handle_path /backend/* {
-		reverse_proxy sinatle-api.railway.internal:5050
+
+	handle_path {$BACKEND_PREFIX:/backend}/* {
+		reverse_proxy {$BACKEND_DOMAIN}:{$BACKEND_PORT}
 	}
 
 	handle {
-		reverse_proxy sinatle-ui.railway.internal:8080
+		reverse_proxy {$FRONTEND_DOMAIN}:{$FRONTEND_PORT}
 	}
 }
