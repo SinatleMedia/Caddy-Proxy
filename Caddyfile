@@ -1,5 +1,7 @@
 {
-	auto_https off
+	admin off
+	persist_config off
+	auto_https on
 }
 
 :{$PORT} {
