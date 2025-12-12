@@ -1,24 +1,11 @@
-:{$PORT} {
+{
+	auto_https on
+}
 
-    # backend - preserve /api prefix
-    handle /api/* {
-        reverse_proxy {
-            dynamic a {
-                name {$BACKEND_DOMAIN}
-                port {$BACKEND_PORT}
-                refresh 1s
-            }
-            header_up Host {upstream_hostport}
-        }
-    }
+{$RAILWAY_PUBLIC_DOMAIN} {
+	reverse_proxy sinatle-api.railway.internal:5050
+}
 
-    # frontend - everything else
-    reverse_proxy {
-        dynamic a {
-            name {$FRONTEND_DOMAIN}
-            port {$FRONTEND_PORT}
-            refresh 1s
-        }
-        header_up Host {upstream_hostport}
-    }
+sinatle-ui.{$RAILWAY_PUBLIC_DOMAIN} {
+	reverse_proxy sinatle-ui.railway.internal:8080
 }
