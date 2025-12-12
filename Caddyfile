@@ -1,26 +1,14 @@
-# global options
 {
-	admin off
-	persist_config off
 	auto_https on
-
-	log {
-		format json
-	}
-
-	servers {
-		trusted_proxies static private_ranges
-	}
 }
 
 :{$PORT} {
 
-	handle_path /backend/* {
-		reverse_proxy sinatle-api.railway.internal:5050
+	handle_path {$BACKEND_PREFIX:/backend}/* {
+		reverse_proxy {$BACKEND_DOMAIN:sinatle-api.railway.internal}:{$BACKEND_PORT:5050}
 	}
 
 	handle {
-		reverse_proxy sinatle-ui.railway.internal:8080
+		reverse_proxy {$FRONTEND_DOMAIN:sinatle-ui.railway.internal}:{$FRONTEND_PORT:8080}
 	}
 }
-
