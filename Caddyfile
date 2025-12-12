@@ -1,14 +1,14 @@
 {
-	auto_https on
+	auto_https off
 }
 
 :{$PORT} {
 
 	handle_path {$BACKEND_PREFIX:/backend}/* {
-		reverse_proxy {$BACKEND_DOMAIN:sinatle-api.railway.internal}:{$BACKEND_PORT:5050}
+		reverse_proxy {$BACKEND_DOMAIN}:{$BACKEND_PORT}
 	}
 
 	handle {
-		reverse_proxy {$FRONTEND_DOMAIN:sinatle-ui.railway.internal}:{$FRONTEND_PORT:8080}
+		reverse_proxy {$FRONTEND_DOMAIN}:{$FRONTEND_PORT}
 	}
 }
