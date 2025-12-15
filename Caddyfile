@@ -32,25 +32,21 @@
 		format json
 	}
 
+	# 🔧 Swagger fix
+	handle /backend/swagger/* {
+		rewrite * /v1/swagger.json
+		reverse_proxy {$BACKEND_DOMAIN}:{$BACKEND_PORT}
+	}
+
+	# 🔁 Normal backend routes
 	handle_path {$BACKEND_PREFIX:/backend}/* {
-		reverse_proxy {$BACKEND_DOMAIN}:{$BACKEND_PORT} {
-			import lb_settings
-			import passive_health_checks
-
-			header_up X-Forwarded-Proto {scheme}
-			header_up X-Forwarded-Host {host}
-			header_up X-Forwarded-For {remote}
-		}
+		reverse_proxy {$BACKEND_DOMAIN}:{$BACKEND_PORT}
 	}
 
+	# 🌍 Frontend
 	handle {
-		reverse_proxy {$FRONTEND_DOMAIN}:{$FRONTEND_PORT} {
-			import lb_settings
-			import passive_health_checks
-
-			header_up X-Forwarded-Proto {scheme}
-			header_up X-Forwarded-Host {host}
-			header_up X-Forwarded-For {remote}
-		}
+		reverse_proxy {$FRONTEND_DOMAIN}:{$FRONTEND_PORT}
 	}
+}
+
 }
