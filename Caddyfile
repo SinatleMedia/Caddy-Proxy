@@ -32,8 +32,8 @@
 		format json
 	}
 
-	# 🔧 Swagger fix
-	handle /backend/swagger/* {
+	# 🔧 Swagger JSON fix ONLY
+	handle /backend/swagger/v1/swagger.json {
 		rewrite * /v1/swagger.json
 		reverse_proxy {$BACKEND_DOMAIN}:{$BACKEND_PORT}
 	}
@@ -48,5 +48,3 @@
 		reverse_proxy {$FRONTEND_DOMAIN}:{$FRONTEND_PORT}
 	}
 }
-
-
