@@ -14,11 +14,10 @@
 
 :{$PORT} {
 
-	# Swagger JSON
-	handle /swagger/v1/swagger.json {
-		rewrite * /v1/swagger.json
-		reverse_proxy {$BACKEND_DOMAIN}:{$BACKEND_PORT}
-	}
+handle = /backend/swagger/v1/swagger.json {
+	rewrite * /v1/swagger.json
+	reverse_proxy {$BACKEND_DOMAIN}:{$BACKEND_PORT}
+}
 
 	# Backend API
 	handle_path /backend/* {
