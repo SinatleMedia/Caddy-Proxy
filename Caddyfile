@@ -36,7 +36,10 @@
 		reverse_proxy {$BACKEND_DOMAIN}:{$BACKEND_PORT} {
 			import lb_settings
 			import passive_health_checks
-			header_up Host {upstream_hostport}
+
+			header_up X-Forwarded-Proto {scheme}
+			header_up X-Forwarded-Host {host}
+			header_up X-Forwarded-For {remote}
 		}
 	}
 
@@ -44,7 +47,10 @@
 		reverse_proxy {$FRONTEND_DOMAIN}:{$FRONTEND_PORT} {
 			import lb_settings
 			import passive_health_checks
-			header_up Host {upstream_hostport}
+
+			header_up X-Forwarded-Proto {scheme}
+			header_up X-Forwarded-Host {host}
+			header_up X-Forwarded-For {remote}
 		}
 	}
 }
